@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniHome | Tu refugio universitario</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #1A237E; /* Azul Índigo Institucional */
+            --accent: #E91E63;  /* Rosa Fucsia para destacados */
+            --light: #F5F5F5;   /* Fondo Gris Suave */
+            --dark: #212121;    /* Texto Principal */
+            --white: #ffffff;
+            --glass: rgba(255, 255, 255, 0.95);
+            --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            line-height: 1.6;
+            background-image: radial-gradient(#d1d1d1 1px, transparent 1px);
+            background-size: 20px 20px; /* Textura sutil de puntos */
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--primary);
+        }
+
+        /* --- Header Estilo Póster --- */
+        header {
+            background: var(--primary);
+            color: var(--white);
+            padding: 2rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .brand-container {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            z-index: 2;
+        }
+
+        .logo-placeholder {
+            font-size: 3rem;
+            color: var(--white);
+        }
+
+        .title-block h1 {
+            color: var(--white);
+            font-size: 3rem;
+            font-weight: 800;
+            line-height: 1;
+            margin-bottom: 5px;
+        }
+
+        .title-block p {
+            font-size: 1.2rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            opacity: 0.9;
+        }
+
+        .uni-shield {
+            background: white;
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--primary);
+            box-shadow: 0 0 15px rgba(255,255,255,0.3);
+            text-align: center;
+            font-size: 0.7rem;
+            border: 2px solid var(--accent);
+        }
+
+        /* --- Layout Principal --- */
+        .container {
+            max-width: 1200px;
+            margin: 40px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        /* --- Tarjetas con Efecto Glass y Animación --- */
+        .card {
+            background: var(--glass);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            backdrop-filter: blur(4px);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            opacity: 0; /* Para animación de entrada */
+            animation: fadeInUp 0.8s ease-out forwards;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(26, 35, 126, 0.2);
+        }
+
+        /* Títulos de sección estilo "Etiqueta" del póster */
+        .card-header {
+            background: var(--primary);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 20px;
+            font-weight: 700;
+            box-shadow: 0 4px 10px rgba(26, 35, 126, 0.3);
+        }
+
+        /* --- Gráficas Visuales (Barras) --- */
+        .chart-row {
+            margin-bottom: 15px;
+        }
+        .bar-container {
+            background: #e0e0e0;
+            border-radius: 10px;
+            height: 20px;
+            width: 100%;
+            margin-top: 5px;
+            overflow: hidden;
+        }
+        .bar {
+            height: 100%;
+            border-radius: 10px;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
+            width: 0%; /* Se anima con CSS */
+            transition: width 1.5s ease-in-out;
+        }
+
+        /* --- Tablas Estilo Póster --- */
+        .poster-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            font-size: 0.9rem;
+        }
+        .poster-table th {
+            background-color: #009688; /* Turquesa del póster */
+            color: white;
+            padding: 10px;
+            text-align: left;
+            border-radius: 5px 5px 0 0;
+        }
+        .poster-table td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        /* --- Botón CTA --- */
+        .cta-button {
+            display: block;
+            width: 100%;
+            text-align: center;
+            background: var(--accent);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            font-family: 'Montserrat', sans-serif;
+            margin-top: 20px;
+            transition: background 0.3s;
+        }
+        .cta-button:hover {
+            background: #c2185b;
+        }
+
+        /* --- Footer --- */
+        footer {
+            background: var(--dark);
+            color: white;
+            text-align: center;
+            padding: 40px 20px;
+            margin-top: 60px;
+        }
+        .team-list {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .team-member {
+            background: rgba(255,255,255,0.1);
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+        }
+
+        /* --- Animaciones --- */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Retrasos de animación para efecto cascada */
+        .card:nth-child(1) { animation-delay: 0.1s; }
+        .card:nth-child(2) { animation-delay: 0.2s; }
+        .card:nth-child(3) { animation-delay: 0.3s; }
+        .card:nth-child(4) { animation-delay: 0.4s; }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header { flex-direction: column; text-align: center; gap: 20px; }
+            .container { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="brand-container">
+            <div class="logo-placeholder"><i class="fas fa-home"></i></div>
+            <div class="title-block">
+                <h1>UniHome</h1>
+                <p>Tu refugio universitario</p>
+            </div>
+        </div>
+        <div class="uni-shield">
+            UATx<br>FCBIyT
+        </div>
+    </header>
+
+    <div class="container">
+
+        <div style="display: flex; flex-direction: column; gap: 30px;">
+            
+            <section class="card">
+                <div class="card-header"><i class="fas fa-book-open"></i> Introducción</div>
+                <p>El acceso a una vivienda adecuada es vital para el rendimiento académico. En la <strong>Universidad Autónoma de Tlaxcala</strong>, este proceso sigue siendo tradicional y disperso.</p>
+                <br>
+                <p><strong>UniHome</strong> moderniza este proceso, formalizando la relación entre estudiantes y arrendadores mediante herramientas digitales innovadoras.</p>
+            </section>
+
+            <section class="card">
+                <div class="card-header"><i class="fas fa-search"></i> El Desafío</div>
+                <p>Los estudiantes enfrentan:</p>
+                <ul style="padding-left: 20px; margin-top: 10px;">
+                    <li>❌ <strong>Costos elevados</strong> y ubicaciones lejanas.</li>
+                    <li>❌ <strong>Inseguridad</strong> y falta de certeza jurídica.</li>
+                    <li>❌ <strong>Desgaste físico</strong> buscando anuncios de "Se Renta".</li>
+                </ul>
+            </section>
+
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 30px;">
+            
+            <section class="card" style="border-top: 5px solid var(--accent);">
+                <div class="card-header" style="background: var(--accent);"><i class="fas fa-chart-pie"></i> Voz de la Comunidad</div>
+                <p style="font-size: 0.9rem; margin-bottom: 20px;">Resultados de encuesta a 58 estudiantes (Oct 2025):</p>
+                
+                <div class="chart-row">
+                    <div style="display:flex; justify-content:space-between;">
+                        <strong>Búsqueda "Difícil"</strong>
+                        <span>48.3%</span>
+                    </div>
+                    <div class="bar-container"><div class="bar" style="width: 48.3%;"></div></div>
+                </div>
+
+                <div class="chart-row">
+                    <div style="display:flex; justify-content:space-between;">
+                        <strong>Precio Accesible</strong>
+                        <span>69.0%</span>
+                    </div>
+                    <div class="bar-container"><div class="bar" style="width: 69%;"></div></div>
+                </div>
+
+                <div class="chart-row">
+                    <div style="display:flex; justify-content:space-between;">
+                        <strong>Interés en Contratos Digitales</strong>
+                        <span>66.0%</span>
+                    </div>
+                    <div class="bar-container"><div class="bar" style="width: 66%;"></div></div>
+                </div>
+            </section>
+
+            <section class="card">
+                <div class="card-header" style="background: #009688;"><i class="fas fa-flask"></i> Estado del Arte</div>
+                <table class="poster-table">
+                    <tr>
+                        <th>Tecnología</th>
+                        <th>Aplicación</th>
+                    </tr>
+                    <tr>
+                        <td>Cloud Computing</td>
+                        <td>Infraestructura escalable (JoCCASA).</td>
+                    </tr>
+                    <tr>
+                        <td>Seguridad Web</td>
+                        <td>Protección de datos y contratos.</td>
+                    </tr>
+                    <tr>
+                        <td>Visual Computing</td>
+                        <td>Galerías dinámicas de inmuebles.</td>
+                    </tr>
+                </table>
+            </section>
+
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 30px;">
+
+            <section class="card">
+                <div class="card-header"><i class="fas fa-rocket"></i> Propuesta UniHome</div>
+                <p>Una solución integral con enfoque social y legal:</p>
+                <div style="margin-top: 15px;">
+                    <p><i class="fas fa-check-circle" style="color: var(--accent);"></i> <strong>Gestión Legal:</strong> Contratos con validez municipal.</p>
+                    <p><i class="fas fa-check-circle" style="color: var(--accent);"></i> <strong>Verificación:</strong> Seguridad para ambas partes.</p>
+                    <p><i class="fas fa-check-circle" style="color: var(--accent);"></i> <strong>Alertas Sociales:</strong> Reporte de irregularidades.</p>
+                </div>
+                <a href="#" class="cta-button">Ver Prototipo</a>
+            </section>
+
+            <section class="card">
+                <div class="card-header"><i class="fas fa-bullseye"></i> Objetivos</div>
+                <ul style="padding-left: 20px; list-style: none;">
+                    <li style="margin-bottom: 10px;"><i class="fas fa-map-marker-alt" style="color: var(--primary);"></i> Geolocalización precisa (Google Maps).</li>
+                    <li style="margin-bottom: 10px;"><i class="fas fa-filter" style="color: var(--primary);"></i> Filtrado inteligente (precio, zona).</li>
+                    <li style="margin-bottom: 10px;"><i class="fas fa-mobile-alt" style="color: var(--primary);"></i> Interfaz UX intuitiva y móvil.</li>
+                </ul>
+            </section>
+
+        </div>
+
+    </div>
+
+    <footer>
+        <h3>Universidad Autónoma de Tlaxcala</h3>
+        <p>Facultad de Ciencias Básicas, Ingeniería y Tecnología</p>
+        
+        <div class="team-list">
+            <span class="team-member">Jesús Antonio Barreto Castillo</span>
+            <span class="team-member">Elizabeth Hernández Bravo</span>
+            <span class="team-member">Suri Sarahi Chadha López</span>
+            <span class="team-member">Guillermo Méndez Mejía</span>
+        </div>
+        
+        <p style="margin-top: 30px; font-size: 0.8rem; opacity: 0.6;">© 2025 UniHome Project - Seminario de Integración</p>
+    </footer>
+
+    <script>
+        window.addEventListener('load', () => {
+            document.querySelectorAll('.bar').forEach(bar => {
+                const width = bar.style.width;
+                bar.style.width = '0';
+                setTimeout(() => {
+                    bar.style.width = width;
+                }, 500);
+            });
+        });
+    </script>
+
+</body>
+</html>
