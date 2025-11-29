@@ -139,18 +139,20 @@
     <!-- Navegación -->
     <nav class="fixed w-full z-50 glass-panel border-t-0 border-x-0 top-0">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex items-center justify-between h-20">
+            <!-- CAMBIO: Aumentada la altura de h-20 a h-28 -->
+            <div class="flex items-center justify-between h-28">
                 
                 <!-- CAMBIO 1: Reemplazo del icono y texto por el Logo y Eslogan -->
-                <div class="flex items-center gap-3">
+                <div class="flex items-center gap-4">
                     <!-- Logo pequeño con efecto glass suave -->
-                    <div class="p-1 rounded-lg glass-image">
+                    <!-- CAMBIO: Aumentado padding (p-2) y tamaño de imagen (w-16 h-16) -->
+                    <div class="p-2 rounded-lg glass-image">
                         <!-- AGREGADO: clase 'invert' para volver el logo blanco -->
-                        <img src="Logo-UniHome-NoFondo.png" alt="Logo UniHome" class="w-8 h-8 object-contain invert">
+                        <img src="Logo-UniHome-NoFondo.png" alt="Logo UniHome" class="w-16 h-16 object-contain invert">
                     </div>
                     <!-- Eslogan como imagen, también con un sutil efecto glass para consistencia -->
-                    <!-- AGREGADO: clase 'invert' para volver el texto del slogan blanco -->
-                    <img src="Slogan-UniHome-NoFondo.png" alt="Tu refugio universitario" class="h-5 object-contain opacity-90 invert">
+                    <!-- CAMBIO: Aumentada la altura del slogan (h-10) -->
+                    <img src="Slogan-UniHome-NoFondo.png" alt="Tu refugio universitario" class="h-10 object-contain opacity-90 invert">
                 </div>
                 
                 <!-- Desktop Menu -->
@@ -184,7 +186,8 @@
     </nav>
 
     <!-- Hero Section -->
-    <section id="inicio" class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 px-4 text-center">
+    <!-- CAMBIO: Aumentado el padding superior (pt-44 y lg:pt-56) para compensar la barra más grande -->
+    <section id="inicio" class="relative pt-44 pb-20 lg:pt-56 lg:pb-32 px-4 text-center">
         <div class="max-w-4xl mx-auto space-y-8">
             
             <!-- CAMBIO 2: Agregado del logo principal en la sección Hero -->
