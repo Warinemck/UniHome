@@ -1,385 +1,467 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>UniHome | Tu refugio universitario</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
+    <title>UniHome | Blog del Proyecto</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Iconos Lucide -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
     <style>
-        :root {
-            --primary: #1A237E; /* Azul Índigo Institucional */
-            --accent: #E91E63;  /* Rosa Fucsia para destacados */
-            --light: #F5F5F5;   /* Fondo Gris Suave */
-            --dark: #212121;    /* Texto Principal */
-            --white: #ffffff;
-            --glass: rgba(255, 255, 255, 0.95);
-            --shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
+        /* --- Configuración Base y Tipografía --- */
         body {
-            font-family: 'Roboto', sans-serif;
-            background-color: var(--light);
-            color: var(--dark);
-            line-height: 1.6;
-            background-image: radial-gradient(#d1d1d1 1px, transparent 1px);
-            background-size: 20px 20px; /* Textura sutil de puntos */
+            font-family: 'Outfit', sans-serif;
+            background-color: #0f172a; /* Slate 900 */
+            color: #e2e8f0;
+            overflow-x: hidden;
+            position: relative;
         }
 
-        h1, h2, h3, h4 {
-            font-family: 'Montserrat', sans-serif;
-            color: var(--primary);
+        /* --- Fondo Animado (Orbes de Luz) --- */
+        .background-orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(100px);
+            z-index: -1;
+            animation: float 25s infinite ease-in-out;
+            opacity: 0.5;
+            pointer-events: none;
         }
 
-        /* --- Header Estilo Póster --- */
-        header {
-            background: var(--primary);
-            color: var(--white);
-            padding: 2rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        .orb-primary {
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, #4f46e5 0%, transparent 70%); /* Indigo */
+            top: -150px;
+            left: -150px;
+        }
+
+        .orb-secondary {
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, #c026d3 0%, transparent 70%); /* Fuchsia */
+            bottom: -100px;
+            right: -100px;
+            animation-delay: -5s;
+        }
+
+        .orb-accent {
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, #06b6d4 0%, transparent 70%); /* Cyan */
+            top: 40%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: -10s;
+            opacity: 0.3;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -50px) scale(1.1); }
+            66% { transform: translate(-20px, 20px) scale(0.9); }
+        }
+
+        /* --- Glassmorphism (El efecto de vidrio) --- */
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.65); /* Fondo oscuro semitransparente */
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
         }
 
-        .brand-container {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            z-index: 2;
-        }
-
-        .logo-placeholder {
-            font-size: 3rem;
-            color: var(--white);
-        }
-
-        .title-block h1 {
-            color: var(--white);
-            font-size: 3rem;
-            font-weight: 800;
-            line-height: 1;
-            margin-bottom: 5px;
-        }
-
-        .title-block p {
-            font-size: 1.2rem;
-            font-weight: 300;
-            letter-spacing: 2px;
-            opacity: 0.9;
-        }
-
-        .uni-shield {
-            background: white;
-            border-radius: 50%;
-            width: 80px;
-            height: 80px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            color: var(--primary);
-            box-shadow: 0 0 15px rgba(255,255,255,0.3);
-            text-align: center;
-            font-size: 0.7rem;
-            border: 2px solid var(--accent);
-        }
-
-        /* --- Layout Principal --- */
-        .container {
-            max-width: 1200px;
-            margin: 40px auto;
-            padding: 0 20px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-        }
-
-        /* --- Tarjetas con Efecto Glass y Animación --- */
-        .card {
-            background: var(--glass);
-            padding: 30px;
-            border-radius: 20px;
-            box-shadow: var(--shadow);
-            border: 1px solid rgba(255, 255, 255, 0.18);
-            backdrop-filter: blur(4px);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            opacity: 0; /* Para animación de entrada */
-            animation: fadeInUp 0.8s ease-out forwards;
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 40px rgba(26, 35, 126, 0.2);
-        }
-
-        /* Títulos de sección estilo "Etiqueta" del póster */
-        .card-header {
-            background: var(--primary);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 50px;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 20px;
-            font-weight: 700;
-            box-shadow: 0 4px 10px rgba(26, 35, 126, 0.3);
-        }
-
-        /* --- Gráficas Visuales (Barras) --- */
-        .chart-row {
-            margin-bottom: 15px;
-        }
-        .bar-container {
-            background: #e0e0e0;
-            border-radius: 10px;
-            height: 20px;
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
             width: 100%;
-            margin-top: 5px;
-            overflow: hidden;
-        }
-        .bar {
             height: 100%;
-            border-radius: 10px;
-            background: linear-gradient(90deg, var(--primary) 0%, var(--accent) 100%);
-            width: 0%; /* Se anima con CSS */
-            transition: width 1.5s ease-in-out;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+            transition: 0.5s;
         }
 
-        /* --- Tablas Estilo Póster --- */
-        .poster-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-            font-size: 0.9rem;
-        }
-        .poster-table th {
-            background-color: #009688; /* Turquesa del póster */
-            color: white;
-            padding: 10px;
-            text-align: left;
-            border-radius: 5px 5px 0 0;
-        }
-        .poster-table td {
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
+        .glass-card:hover::before {
+            left: 100%;
         }
 
-        /* --- Botón CTA --- */
-        .cta-button {
-            display: block;
-            width: 100%;
-            text-align: center;
-            background: var(--accent);
-            color: white;
-            padding: 15px;
-            border-radius: 10px;
-            text-decoration: none;
-            font-weight: bold;
-            font-family: 'Montserrat', sans-serif;
-            margin-top: 20px;
-            transition: background 0.3s;
-        }
-        .cta-button:hover {
-            background: #c2185b;
+        .glass-card:hover {
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.06);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 40px -5px rgba(0, 0, 0, 0.4);
         }
 
-        /* --- Footer --- */
-        footer {
-            background: var(--dark);
-            color: white;
-            text-align: center;
-            padding: 40px 20px;
-            margin-top: 60px;
-        }
-        .team-list {
-            list-style: none;
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 20px;
-            margin-top: 20px;
-        }
-        .team-member {
-            background: rgba(255,255,255,0.1);
-            padding: 10px 20px;
-            border-radius: 30px;
-            font-size: 0.9rem;
+        /* --- Utilidades --- */
+        .text-gradient {
+            background: linear-gradient(to right, #22d3ee, #e879f9);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        /* --- Animaciones --- */
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+        ::-webkit-scrollbar {
+            width: 8px;
         }
-
-        /* Retrasos de animación para efecto cascada */
-        .card:nth-child(1) { animation-delay: 0.1s; }
-        .card:nth-child(2) { animation-delay: 0.2s; }
-        .card:nth-child(3) { animation-delay: 0.3s; }
-        .card:nth-child(4) { animation-delay: 0.4s; }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            header { flex-direction: column; text-align: center; gap: 20px; }
-            .container { grid-template-columns: 1fr; }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #475569;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #64748b;
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="brand-container">
-            <div class="logo-placeholder"><i class="fas fa-home"></i></div>
-            <div class="title-block">
-                <h1>UniHome</h1>
-                <p>Tu refugio universitario</p>
+    <!-- Fondo -->
+    <div class="background-orb orb-primary"></div>
+    <div class="background-orb orb-secondary"></div>
+    <div class="background-orb orb-accent"></div>
+
+    <!-- Navegación -->
+    <nav class="fixed w-full z-50 glass-panel border-t-0 border-x-0 top-0">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex items-center gap-2">
+                    <div class="bg-cyan-500/20 p-2 rounded-lg border border-cyan-500/30">
+                        <i data-lucide="home" class="w-6 h-6 text-cyan-400"></i>
+                    </div>
+                    <span class="text-2xl font-bold text-white tracking-tight">Uni<span class="text-cyan-400">Home</span></span>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-6">
+                        <a href="#inicio" class="text-sm font-medium hover:text-cyan-400 transition-colors">Inicio</a>
+                        <a href="#problematica" class="text-sm font-medium hover:text-cyan-400 transition-colors">Problemática</a>
+                        <a href="#solucion" class="text-sm font-medium hover:text-cyan-400 transition-colors">Solución</a>
+                        <a href="#obstaculos" class="text-sm font-medium hover:text-cyan-400 transition-colors">Obstáculos</a>
+                        <a href="#equipo" class="text-sm font-medium hover:text-cyan-400 transition-colors">Equipo</a>
+                    </div>
+                </div>
+
+                <!-- Mobile Button -->
+                <div class="md:hidden">
+                    <button onclick="document.getElementById('mobile-menu').classList.toggle('hidden')" class="text-gray-300 hover:text-white">
+                        <i data-lucide="menu" class="w-7 h-7"></i>
+                    </button>
+                </div>
             </div>
         </div>
-        <div class="uni-shield">
-            UATx<br>FCBIyT
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden glass-panel border-t border-white/10">
+            <div class="px-4 py-4 space-y-2">
+                <a href="#inicio" class="block px-3 py-2 rounded-md hover:bg-white/5">Inicio</a>
+                <a href="#problematica" class="block px-3 py-2 rounded-md hover:bg-white/5">Problemática</a>
+                <a href="#solucion" class="block px-3 py-2 rounded-md hover:bg-white/5">Solución</a>
+                <a href="#obstaculos" class="block px-3 py-2 rounded-md hover:bg-white/5">Obstáculos</a>
+            </div>
         </div>
-    </header>
+    </nav>
 
-    <div class="container">
-
-        <div style="display: flex; flex-direction: column; gap: 30px;">
+    <!-- Hero Section -->
+    <section id="inicio" class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 px-4 text-center">
+        <div class="max-w-4xl mx-auto space-y-8">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full glass-card border-cyan-500/30 text-cyan-300 text-sm font-semibold mx-auto">
+                <span class="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
+                Proyecto UATx - FCBIYT
+            </div>
             
-            <section class="card">
-                <div class="card-header"><i class="fas fa-book-open"></i> Introducción</div>
-                <p>El acceso a una vivienda adecuada es vital para el rendimiento académico. En la <strong>Universidad Autónoma de Tlaxcala</strong>, este proceso sigue siendo tradicional y disperso.</p>
-                <br>
-                <p><strong>UniHome</strong> moderniza este proceso, formalizando la relación entre estudiantes y arrendadores mediante herramientas digitales innovadoras.</p>
-            </section>
+            <h1 class="text-5xl md:text-7xl font-bold leading-tight tracking-tight">
+                Tu Refugio <span class="text-gradient">Universitario</span>
+            </h1>
+            
+            <p class="text-xl text-gray-300 max-w-2xl mx-auto leading-relaxed">
+                UniHome nace de la necesidad de modernizar la búsqueda de vivienda. Conectamos estudiantes y arrendadores mediante tecnología segura, mapas interactivos y contratos digitales.
+            </p>
 
-            <section class="card">
-                <div class="card-header"><i class="fas fa-search"></i> El Desafío</div>
-                <p>Los estudiantes enfrentan:</p>
-                <ul style="padding-left: 20px; margin-top: 10px;">
-                    <li>❌ <strong>Costos elevados</strong> y ubicaciones lejanas.</li>
-                    <li>❌ <strong>Inseguridad</strong> y falta de certeza jurídica.</li>
-                    <li>❌ <strong>Desgaste físico</strong> buscando anuncios de "Se Renta".</li>
-                </ul>
-            </section>
-
+            <div class="flex flex-col sm:flex-row gap-4 justify-center pt-6">
+                <a href="#solucion" class="px-8 py-4 rounded-xl bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-bold shadow-lg shadow-cyan-500/25 transition-all transform hover:-translate-y-1">
+                    Ver la Solución
+                </a>
+                <a href="#obstaculos" class="px-8 py-4 rounded-xl glass-card hover:bg-white/10 text-white font-semibold transition-all">
+                    Leer la Bitácora
+                </a>
+            </div>
         </div>
+    </section>
 
-        <div style="display: flex; flex-direction: column; gap: 30px;">
-            
-            <section class="card" style="border-top: 5px solid var(--accent);">
-                <div class="card-header" style="background: var(--accent);"><i class="fas fa-chart-pie"></i> Voz de la Comunidad</div>
-                <p style="font-size: 0.9rem; margin-bottom: 20px;">Resultados de encuesta a 58 estudiantes (Oct 2025):</p>
+    <!-- Sección: Definición del Problema -->
+    <section id="problematica" class="py-20 px-4">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">La Realidad del Estudiante</h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-fuchsia-500 to-purple-500 mx-auto rounded-full"></div>
+                <p class="mt-6 text-gray-400 max-w-2xl mx-auto">
+                    Datos basados en encuestas a 58 estudiantes y 50 arrendadores de la comunidad universitaria.
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Problema 1 -->
+                <div class="glass-card p-8 rounded-2xl">
+                    <div class="bg-red-500/20 w-14 h-14 rounded-xl flex items-center justify-center mb-6 text-red-400">
+                        <i data-lucide="alert-triangle" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2">48.3% Dificultad</h3>
+                    <p class="text-gray-300 mb-4">Casi la mitad de los estudiantes considera "Difícil" o "Muy Difícil" encontrar vivienda adecuada.</p>
+                    <div class="w-full bg-gray-700 h-2 rounded-full overflow-hidden">
+                        <div class="bg-red-500 h-full" style="width: 48.3%"></div>
+                    </div>
+                </div>
+
+                <!-- Problema 2 -->
+                <div class="glass-card p-8 rounded-2xl">
+                    <div class="bg-orange-500/20 w-14 h-14 rounded-xl flex items-center justify-center mb-6 text-orange-400">
+                        <i data-lucide="search" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2">Búsqueda Física</h3>
+                    <p class="text-gray-300">
+                        La falta de información centralizada obliga a los alumnos a recorrer calles buscando anuncios de "Se Renta", generando desgaste e inseguridad.
+                    </p>
+                </div>
+
+                <!-- Problema 3 -->
+                <div class="glass-card p-8 rounded-2xl">
+                    <div class="bg-yellow-500/20 w-14 h-14 rounded-xl flex items-center justify-center mb-6 text-yellow-400">
+                        <i data-lucide="shield-alert" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-2">Incertidumbre</h3>
+                    <p class="text-gray-300">
+                        Para los arrendadores, los mayores problemas son la falta de seriedad, incumplimiento y daños al inmueble.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección: La Solución (UniHome) -->
+    <section id="solucion" class="py-20 px-4 relative">
+        <div class="max-w-7xl mx-auto glass-panel rounded-3xl p-8 md:p-16 border border-white/10">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
                 
-                <div class="chart-row">
-                    <div style="display:flex; justify-content:space-between;">
-                        <strong>Búsqueda "Difícil"</strong>
-                        <span>48.3%</span>
+                <div>
+                    <h2 class="text-3xl md:text-5xl font-bold mb-6">Nuestra Propuesta <br><span class="text-gradient">Tecnológica</span></h2>
+                    <p class="text-lg text-gray-300 mb-8 leading-relaxed">
+                        A diferencia de plataformas genéricas como Airbnb o Facebook, UniHome ofrece un enfoque <strong>social y legal especializado</strong> para el entorno universitario.
+                    </p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start gap-4">
+                            <div class="p-3 rounded-lg bg-green-500/20 text-green-400 mt-1">
+                                <i data-lucide="file-check" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-bold text-white">Contratos Digitales</h4>
+                                <p class="text-sm text-gray-400">Generación automática de contratos con validez municipal para proteger a ambas partes.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="p-3 rounded-lg bg-blue-500/20 text-blue-400 mt-1">
+                                <i data-lucide="map" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-bold text-white">Geolocalización</h4>
+                                <p class="text-sm text-gray-400">Integración con Google Maps para ubicar inmuebles cerca de las facultades de la UATx.</p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start gap-4">
+                            <div class="p-3 rounded-lg bg-purple-500/20 text-purple-400 mt-1">
+                                <i data-lucide="users" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-bold text-white">Filtros de Convivencia</h4>
+                                <p class="text-sm text-gray-400">Búsqueda adaptada a la vida universitaria: compañeros de cuarto, reglas de casa y servicios.</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="bar-container"><div class="bar" style="width: 48.3%;"></div></div>
                 </div>
 
-                <div class="chart-row">
-                    <div style="display:flex; justify-content:space-between;">
-                        <strong>Precio Accesible</strong>
-                        <span>69.0%</span>
+                <div class="relative">
+                    <!-- Decoración visual abstracta de la app -->
+                    <div class="glass-card rounded-2xl p-6 rotate-3 hover:rotate-0 transition-transform duration-500 border-white/20">
+                        <div class="flex items-center justify-between mb-6 border-b border-white/10 pb-4">
+                            <div class="flex gap-2">
+                                <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                                <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                                <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                            </div>
+                            <div class="text-xs text-gray-400 font-mono">unihome_app.php</div>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="h-40 w-full bg-cyan-900/30 rounded-lg animate-pulse"></div>
+                            <div class="flex gap-4">
+                                <div class="h-20 w-1/2 bg-white/5 rounded-lg"></div>
+                                <div class="h-20 w-1/2 bg-white/5 rounded-lg"></div>
+                            </div>
+                            <div class="h-8 w-1/3 bg-fuchsia-500/20 rounded-md"></div>
+                        </div>
                     </div>
-                    <div class="bar-container"><div class="bar" style="width: 69%;"></div></div>
-                </div>
-
-                <div class="chart-row">
-                    <div style="display:flex; justify-content:space-between;">
-                        <strong>Interés en Contratos Digitales</strong>
-                        <span>66.0%</span>
+                    <!-- Tarjeta flotante superpuesta -->
+                    <div class="absolute -bottom-6 -left-6 glass-card p-4 rounded-xl border-t border-l border-white/30 bg-black/40">
+                        <div class="flex items-center gap-3">
+                            <i data-lucide="shield-check" class="text-green-400"></i>
+                            <div>
+                                <p class="text-xs text-gray-400">Seguridad Web</p>
+                                <p class="font-bold">Verificación ID</p>
+                            </div>
+                        </div>
                     </div>
-                    <div class="bar-container"><div class="bar" style="width: 66%;"></div></div>
                 </div>
-            </section>
 
-            <section class="card">
-                <div class="card-header" style="background: #009688;"><i class="fas fa-flask"></i> Estado del Arte</div>
-                <table class="poster-table">
-                    <tr>
-                        <th>Tecnología</th>
-                        <th>Aplicación</th>
-                    </tr>
-                    <tr>
-                        <td>Cloud Computing</td>
-                        <td>Infraestructura escalable (JoCCASA).</td>
-                    </tr>
-                    <tr>
-                        <td>Seguridad Web</td>
-                        <td>Protección de datos y contratos.</td>
-                    </tr>
-                    <tr>
-                        <td>Visual Computing</td>
-                        <td>Galerías dinámicas de inmuebles.</td>
-                    </tr>
-                </table>
-            </section>
-
+            </div>
         </div>
+    </section>
 
-        <div style="display: flex; flex-direction: column; gap: 30px;">
-
-            <section class="card">
-                <div class="card-header"><i class="fas fa-rocket"></i> Propuesta UniHome</div>
-                <p>Una solución integral con enfoque social y legal:</p>
-                <div style="margin-top: 15px;">
-                    <p><i class="fas fa-check-circle" style="color: var(--accent);"></i> <strong>Gestión Legal:</strong> Contratos con validez municipal.</p>
-                    <p><i class="fas fa-check-circle" style="color: var(--accent);"></i> <strong>Verificación:</strong> Seguridad para ambas partes.</p>
-                    <p><i class="fas fa-check-circle" style="color: var(--accent);"></i> <strong>Alertas Sociales:</strong> Reporte de irregularidades.</p>
+    <!-- Sección: Obstáculos y Retos (Bitácora) -->
+    <section id="obstaculos" class="py-20 px-4">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl md:text-5xl font-bold mb-12 text-center">Bitácora de <span class="text-cyan-400">Obstáculos</span></h2>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-2 gap-8">
+                
+                <!-- Obstáculo 1: El Vacío de Datos -->
+                <div class="glass-card p-8 rounded-2xl group hover:bg-white/5">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="text-4xl font-bold text-white/10 group-hover:text-white/20 transition-colors">01</span>
+                        <div class="bg-gray-700/50 p-2 rounded-lg"><i data-lucide="database" class="w-5 h-5 text-gray-300"></i></div>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-white">El Vacío de Información</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        <strong>El Reto:</strong> No existía una base de datos centralizada. La información estaba dispersa en carteles físicos y grupos informales de redes sociales.
+                        <br><br>
+                        <strong>La Superación:</strong> Tuvimos que realizar un trabajo de campo exhaustivo (encuestas a 58 estudiantes y 50 arrendadores) para estructurar los primeros datos y validar que el precio (69%) y la cercanía (65.5%) eran los factores críticos.
+                    </p>
                 </div>
-                <a href="#" class="cta-button">Ver Prototipo</a>
-            </section>
 
-            <section class="card">
-                <div class="card-header"><i class="fas fa-bullseye"></i> Objetivos</div>
-                <ul style="padding-left: 20px; list-style: none;">
-                    <li style="margin-bottom: 10px;"><i class="fas fa-map-marker-alt" style="color: var(--primary);"></i> Geolocalización precisa (Google Maps).</li>
-                    <li style="margin-bottom: 10px;"><i class="fas fa-filter" style="color: var(--primary);"></i> Filtrado inteligente (precio, zona).</li>
-                    <li style="margin-bottom: 10px;"><i class="fas fa-mobile-alt" style="color: var(--primary);"></i> Interfaz UX intuitiva y móvil.</li>
-                </ul>
-            </section>
+                <!-- Obstáculo 2: Confianza y Legalidad -->
+                <div class="glass-card p-8 rounded-2xl group hover:bg-white/5">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="text-4xl font-bold text-white/10 group-hover:text-white/20 transition-colors">02</span>
+                        <div class="bg-gray-700/50 p-2 rounded-lg"><i data-lucide="scale" class="w-5 h-5 text-gray-300"></i></div>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-white">La Barrera de la Confianza</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        <strong>El Reto:</strong> Los arrendadores temían daños y falta de pago. Los estudiantes temían estafas. Las apps genéricas no ofrecían un marco legal local.
+                        <br><br>
+                        <strong>La Superación:</strong> Implementamos un sistema de <em>Gestión Legal Integrada</em>. No solo conectamos usuarios, sino que digitalizamos contratos con validez municipal y añadimos verificación de identidad obligatoria.
+                    </p>
+                </div>
 
+                <!-- Obstáculo 3: Complejidad Técnica -->
+                <div class="glass-card p-8 rounded-2xl group hover:bg-white/5">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="text-4xl font-bold text-white/10 group-hover:text-white/20 transition-colors">03</span>
+                        <div class="bg-gray-700/50 p-2 rounded-lg"><i data-lucide="code-2" class="w-5 h-5 text-gray-300"></i></div>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-white">Integración Full-Stack</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        <strong>El Reto:</strong> Integrar múltiples tecnologías (Mapas, Almacenamiento en Nube, Seguridad Web) en una interfaz fluida.
+                        <br><br>
+                        <strong>La Superación:</strong> Se utilizó PHP para un backend robusto, arquitecturas de Cloud Computing para escalabilidad y principios de Computación Visual para las galerías dinámicas.
+                    </p>
+                </div>
+
+                <!-- Obstáculo 4: Adaptabilidad Móvil -->
+                <div class="glass-card p-8 rounded-2xl group hover:bg-white/5">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="text-4xl font-bold text-white/10 group-hover:text-white/20 transition-colors">04</span>
+                        <div class="bg-gray-700/50 p-2 rounded-lg"><i data-lucide="smartphone" class="w-5 h-5 text-gray-300"></i></div>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-white">Prioridad Móvil</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        <strong>El Reto:</strong> El 57% de los estudiantes usa el celular como medio principal. Una web tradicional no bastaba.
+                        <br><br>
+                        <strong>La Superación:</strong> Diseño de interfaz UX enfocado totalmente en móviles (Responsive Design), asegurando que los mapas y formularios complejos fueran fáciles de usar en pantallas pequeñas.
+                    </p>
+                </div>
+
+            </div>
         </div>
+    </section>
 
-    </div>
+    <!-- Sección: Equipo y Tecnologías -->
+    <section id="equipo" class="py-20 px-4 border-t border-white/5">
+        <div class="max-w-5xl mx-auto text-center">
+            
+            <!-- Tecnologías (Pills) -->
+            <div class="flex flex-wrap justify-center gap-3 mb-16">
+                <span class="px-4 py-2 rounded-full glass-card text-xs font-mono text-cyan-300 border border-cyan-500/30">PHP Backend</span>
+                <span class="px-4 py-2 rounded-full glass-card text-xs font-mono text-cyan-300 border border-cyan-500/30">Google Maps API</span>
+                <span class="px-4 py-2 rounded-full glass-card text-xs font-mono text-cyan-300 border border-cyan-500/30">Cloud Computing</span>
+                <span class="px-4 py-2 rounded-full glass-card text-xs font-mono text-cyan-300 border border-cyan-500/30">Web Security</span>
+                <span class="px-4 py-2 rounded-full glass-card text-xs font-mono text-cyan-300 border border-cyan-500/30">UX/UI Design</span>
+            </div>
 
-    <footer>
-        <h3>Universidad Autónoma de Tlaxcala</h3>
-        <p>Facultad de Ciencias Básicas, Ingeniería y Tecnología</p>
-        
-        <div class="team-list">
-            <span class="team-member">Jesús Antonio Barreto Castillo</span>
-            <span class="team-member">Elizabeth Hernández Bravo</span>
-            <span class="team-member">Suri Sarahi Chadha López</span>
-            <span class="team-member">Guillermo Méndez Mejía</span>
+            <h2 class="text-3xl font-bold mb-8">Equipo de Desarrollo</h2>
+            <p class="text-gray-400 mb-10">Universidad Autónoma de Tlaxcala, FCBIYT</p>
+            
+            <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-6">
+                <!-- Miembro 1 -->
+                <div class="glass-card p-6 rounded-xl text-center">
+                    <div class="w-20 h-20 bg-gray-700 rounded-full mx-auto mb-4 flex items-center justify-center text-xl font-bold text-white">JA</div>
+                    <h4 class="font-bold text-white text-sm">Jesús Antonio</h4>
+                    <p class="text-xs text-gray-400">Barreto Castillo</p>
+                </div>
+                <!-- Miembro 2 -->
+                <div class="glass-card p-6 rounded-xl text-center">
+                    <div class="w-20 h-20 bg-gray-700 rounded-full mx-auto mb-4 flex items-center justify-center text-xl font-bold text-white">EH</div>
+                    <h4 class="font-bold text-white text-sm">Elizabeth</h4>
+                    <p class="text-xs text-gray-400">Hernández Bravo</p>
+                </div>
+                <!-- Miembro 3 -->
+                <div class="glass-card p-6 rounded-xl text-center">
+                    <div class="w-20 h-20 bg-gray-700 rounded-full mx-auto mb-4 flex items-center justify-center text-xl font-bold text-white">SS</div>
+                    <h4 class="font-bold text-white text-sm">Suri Sarahi</h4>
+                    <p class="text-xs text-gray-400">Chadha López</p>
+                </div>
+                <!-- Miembro 4 -->
+                <div class="glass-card p-6 rounded-xl text-center">
+                    <div class="w-20 h-20 bg-gray-700 rounded-full mx-auto mb-4 flex items-center justify-center text-xl font-bold text-white">GM</div>
+                    <h4 class="font-bold text-white text-sm">Guillermo</h4>
+                    <p class="text-xs text-gray-400">Méndez Mejía</p>
+                </div>
+            </div>
         </div>
-        
-        <p style="margin-top: 30px; font-size: 0.8rem; opacity: 0.6;">© 2025 UniHome Project - Seminario de Integración</p>
+    </section>
+
+    <footer class="glass-panel py-8 mt-12 text-center border-b-0 border-x-0">
+        <p class="text-gray-500 text-sm">© 2025 UniHome Project. Universidad Autónoma de Tlaxcala.</p>
     </footer>
 
     <script>
-        window.addEventListener('load', () => {
-            document.querySelectorAll('.bar').forEach(bar => {
-                const width = bar.style.width;
-                bar.style.width = '0';
-                setTimeout(() => {
-                    bar.style.width = width;
-                }, 500);
+        // Script para inicializar iconos Lucide
+        lucide.createIcons();
+
+        // Efecto suave al hacer scroll a los enlaces
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
             });
         });
     </script>
-
 </body>
 </html>
